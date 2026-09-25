@@ -1,1 +1,1 @@
-{"name":"EDIN OS","short_name":"EDIN","description":"Personal performance system","start_url":"/","display":"standalone","background_color":"#080909","theme_color":"#080909","icons":[{"src":"/icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]}
+{"id":"/","name":"EDIN OS","short_name":"EDIN","description":"Personal training and progress system","start_url":"/","scope":"/","display":"standalone","background_color":"#f7fbff","theme_color":"#1473e6","icons":[{"src":"/icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]}
