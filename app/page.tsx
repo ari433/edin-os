@@ -1,0 +1,16 @@
+"use client";
+import {useEffect,useState} from "react";
+import {Activity,Dumbbell,Brain,Utensils,ChevronRight,Flame,Check} from "lucide-react";
+const initial=[{id:1,name:"Pompa",done:40,target:50},{id:2,name:"Squats",done:30,target:50},{id:3,name:"Plank",done:45,target:60}];
+export default function Home(){
+ const [work,setWork]=useState(initial); const [water,setWater]=useState(5); const [focus,setFocus]=useState(false);
+ useEffect(()=>{const x=localStorage.getItem("edin-work");if(x)setWork(JSON.parse(x))},[]);
+ function rep(id:number){setWork(w=>{const n=w.map(x=>x.id===id?{...x,done:Math.min(x.target,x.done+1)}:x);localStorage.setItem("edin-work",JSON.stringify(n));return n})}
+ const push=work[0], left=push.target-push.done;
+ return <main><header><div><span className="eyebrow">FRIDAY · SEP 25</span><h1>Hajde Edin.</h1><p>Disiplina fitohet sot, jo neser.</p></div><div className="avatar">E</div></header>
+ <section className="hero"><div className="ring" style={{"--p":String(push.done/push.target*100)+"%"} as React.CSSProperties}><div><b>{push.done}</b><small>/ {push.target}</small></div></div><div className="heroText"><span className="live"><i/> LIVE CHALLENGE</span><h2>{left===0?"U kry! 🔥":"Edhe "+left+" pompa."}</h2><p>{push.done}/{push.target} · Mos e le setin per ma vone.</p><button onClick={()=>rep(1)} disabled={left===0}>+ 1 REP</button></div></section>
+ <h3>Sot</h3><div className="grid"><Card icon={<Activity/>} label="HAPA" value="7,842" sub="2,158 deri ne 10K" pct={78}/><Card icon={<Flame/>} label="STREAK" value="12 dite" sub="Best: 18 dite" pct={67}/><Card icon={<Utensils/>} label="UJE" value={water+"/8"} sub="gota sot" pct={water/8*100} onClick={()=>setWater(Math.min(8,water+1))}/><Card icon={<Brain/>} label="FOCUS" value={focus?"Kryer":"45 min"} sub={focus?"Deep work ✓":"Deep work"} pct={focus?100:0} onClick={()=>setFocus(!focus)}/></div>
+ <section className="panel"><div className="panelTitle"><div><span className="eyebrow">WORKOUT · PUSH DAY</span><h2>Finish what you started.</h2></div><Dumbbell/></div>{work.map(x=><div className="exercise" key={x.id}><button className={x.done>=x.target?"done":""} onClick={()=>rep(x.id)}>{x.done>=x.target?<Check/>:<span>+</span>}</button><div><b>{x.name}</b><small>{x.done} / {x.target}</small></div><div className="mini"><i style={{width:String(x.done/x.target*100)+"%"}}/></div></div>)}</section>
+ <section className="coach"><div className="ai">E</div><div><span className="eyebrow">EDIN AI</span><h2>Po ec mire.</h2><p>Workout-i eshte afer fundit. Kryji pompat, pi edhe 3 gota uje dhe e mbyllim diten forte.</p></div><ChevronRight/></section>
+ <nav>{[["Today","●"],["Train","↗"],["Progress","⌁"],["Life","◇"],["Edin AI","✦"]].map((x,i)=><button className={i===0?"active":""} key={x[0]}><b>{x[1]}</b><span>{x[0]}</span></button>)}</nav></main>}
+function Card({icon,label,value,sub,pct,onClick}:{icon:React.ReactNode,label:string,value:string,sub:string,pct:number,onClick?:()=>void}){return <button className="card" onClick={onClick}><div className="icon">{icon}</div><span className="eyebrow">{label}</span><strong>{value}</strong><small>{sub}</small><div className="bar"><i style={{width:String(pct)+"%"}}/></div></button>}
